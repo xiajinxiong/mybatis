@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.GirlMapper">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap id="girlMap" type="com.example.demo.model.Girl">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="boyFriend" javaType="com.example.demo.model.User">
+            <id property="id" column="sid"/>
+            <result property="name" column="sname"/>
+        </association>
+    </resultMap>
+
+    <insert id="insertGirl" parameterType="com.example.demo.model.Girl">
+        insert into girl values(#{id}, #{name}, #{boyFriend.id})
+    </insert>
+
+
+    <select id="selectGirlByBoyFriend" parameterType="long" resultMap="girlMap">
+        select *, s.id sid, s.stu_name sname from girl g left join student s on g.uid=s.id
+        where g.uid=#{id}
+    </select>
+</mapper>

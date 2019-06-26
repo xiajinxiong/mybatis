@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap id="userAndCars" type="com.example.demo.model.User">
+        <id property="id" column="id"/>
+        <result property="name" column="stu_name"/>
+        <collection property="cars" column="id" ofType="com.example.demo.model.Car" javaType="ArrayList">
+            <id property="cn" column="car.id"/>
+            <result property="brand" column="brand"/>
+            <result property="uid" column="owner"/>
+        </collection>
+    </resultMap>
+    <select id="selectUser" parameterType="long" resultType="com.example.demo.model.User">
+        select id, stu_name as name from student where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="com.example.demo.model.User">
+        insert into student values(#{id}, #{name})
+    </insert>
+    <select id="selectUserAndCars" parameterType="long" resultMap="userAndCars">
+        select student.id, stu_name, car.id, brand, owner from student left join car on student.id=car.owner where student.id=#{id}
+    </select>
+</mapper>

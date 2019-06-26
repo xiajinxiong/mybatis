@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aa.UserMapper">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="selectUser" parameterType="long" resultType="com.example.demo.model.User">
+        select * from student where id = #{id}
+    </select>
+    <insert id="insertUser" parameterType="com.example.demo.model.User">
+        insert into student values(#{id}, #{name})
+    </insert>
+    <select id="selectAllUser" parameterType="String" resultType="com.example.demo.model.User">
+        select * from student where NAME = #{name}
+    </select>
+</mapper>
